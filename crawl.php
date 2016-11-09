@@ -26,6 +26,7 @@ $urlcheck=explode('://',$url);
 $doc = new DOMDocument();
 @$doc->loadHTML($html);
 $metas = $doc->getElementsByTagName('meta');
+$links=$doc->getElementsByTagName('a');
 $ogdescription="";
 $ogtitle="";
 $ogimage="";
@@ -49,6 +50,12 @@ for ($i = 0; $i < $metas->length; $i++)
     if($meta->getAttribute('name') == 'description')
         $description = $meta->getAttribute('content');
 }
+$link="";
+for ($i = 0; $i < $links->length; $i++)
+{
+    $meta = $links->item($i);
+    $link.="<br>".$meta->getAttribute('href'); 
+}
 if($ogtitle=="")
 {
     $ogtitle=$title;
@@ -62,6 +69,7 @@ $data = array('ogtitle' =>$ogtitle ,
                'ogimage'=>$ogimage,
                'ogvideo'=>$ogvideo,
                'host'=>$host["host"],
+               'link'=>$link,
                             );
 
 echo json_encode($data);

@@ -6,7 +6,7 @@ function crawl(element) {
 if(element.value=="")
 {
   prevurl="";
- 
+ $("#output").html("your output will be shown here....");
 }
 
   var match = /(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.)(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.exec(element.value);
@@ -31,6 +31,7 @@ if(element.value=="")
     else
     {
         prevurl="";
+        $("#output").html("your output will be shown here....");
     }
  }   
      
@@ -85,6 +86,7 @@ if(response)
                        html+="<strong>og:image: </strong><br>2<img src='"+obj.ogimage+"' ><br>";
                        html+="<strong>og:video: </strong>"+obj.ogvideo+"<br>";
                        html+="<strong>Host: </strong>"+obj.host+"<br>";
+                       html+="<strong>links: </strong>"+obj.link+"<br>";
 
                        $("#output").html(html);
                     }
