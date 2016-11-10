@@ -6,7 +6,7 @@ function crawl(element) {
 if(element.value=="")
 {
   prevurl="";
- $("#output").html("your output will be shown here....");
+ $("#tab").css({"display":"none"});
 }
 
   var match = /(http:\/\/www.|https:\/\/www.|ftp:\/\/www.|www.)(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.exec(element.value);
@@ -31,7 +31,7 @@ if(element.value=="")
     else
     {
         prevurl="";
-        $("#output").html("your output will be shown here....");
+         $("#tab").css({"display":"none"});
     }
  }   
      
@@ -77,18 +77,33 @@ if(response)
                     data:{url:value},
                     dateType:"json",
                     type:"POST",
+                    beforeSend:function()
+                    {
+                      $("#process").html("Processing");
+                      $("#process").css({"display":"block"});
+                      setInterval(function(){  if($("#process").html()!=""){$("#process").html("."+$("#process").html()+".");} }, 100);
+                     
+                    },
                     success: function(data)
                     {
+                      $("#process").css({"display":"block"});
+                      $("#process").html("");
                       var obj=JSON.parse(data);
                       var html="";
-                       html+="<strong>og:title: </strong>"+obj.ogtitle+"<br>";
-                       html+="<strong>og:description: </strong>"+obj.ogdescription+"<br>";
-                       html+="<strong>og:image: </strong><br>2<img src='"+obj.ogimage+"' ><br>";
-                       html+="<strong>og:video: </strong>"+obj.ogvideo+"<br>";
-                       html+="<strong>Host: </strong>"+obj.host+"<br>";
-                       html+="<strong>links: </strong>"+obj.link+"<br>";
-
+                      var html1="";
+                      $("#tab").css({"display":"flex"});
+                       html+="<strong>og:title: </strong><br>"+obj.ogtitle+"<br><br>";
+                       html+="<strong>og:description: </strong><br>"+obj.ogdescription+"<br><br>";
+                       html+="<strong>og:image: </strong><br><img src='"+obj.ogimage+"' width='200' height='200'><br><br>";
+                       html+="<strong>og:video: </strong><br>"+obj.ogvideo+"<br><br>";
+                       html+="<strong>Host: </strong><br>"+obj.host+"<br><br>";
+                       html1+="<strong>links: </strong><br>"+obj.link+"<br><br>";
+                       html1+="<strong>images: </strong><br><div style='width:500px;heigh:800px;overflow:scroll;border:1px solid #00FF00'>"+obj.image+"</div><br><br>";
+                       $("#preview").attr("src",obj.previewurl);
+                       $("#previewtxt").attr("href",value);
+                       $("#source").html("<xmp>"+obj.source+"</xmp> ");
                        $("#output").html(html);
+                       $("#output1").html(html1);
                     }
                   });
 }   
