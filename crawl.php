@@ -27,6 +27,7 @@ $doc = new DOMDocument();
 @$doc->loadHTML($html);
 $metas = $doc->getElementsByTagName('meta');
 $links=$doc->getElementsByTagName('a');
+$image=$doc->getElementsByTagName('img');
 $ogdescription="";
 $ogtitle="";
 $ogimage="";
@@ -53,9 +54,31 @@ for ($i = 0; $i < $metas->length; $i++)
 $link="";
 for ($i = 0; $i < $links->length; $i++)
 {
-    $meta = $links->item($i);
-    $link.="<br>".$meta->getAttribute('href'); 
+    $linktag = $links->item($i); 
+     if($linktag->getAttribute('href')!="" )
+    {
+      if($linktag->getAttribute('href')!="#" )
+    {
+  if($linktag->getAttribute('href')!="javascript:void(0);" )
+    {
+
+    $link.="<a href='".$linktag->getAttribute('href')."' target='_blank'>".$linktag->getAttribute('href')."</a><br>"; 
+
+	}}
+	}
 }
+
+$img="";
+for ($i = 0; $i < $image->length; $i++)
+{
+    $imagetag = $image->item($i);
+    if($imagetag->getAttribute('src')!="")
+    {
+    $img.="<img style='margin:5px;' src='".$imagetag->getAttribute('src')."' width='200' height='200' >"; 	
+    }
+    
+}
+
 if($ogtitle=="")
 {
     $ogtitle=$title;
@@ -64,12 +87,16 @@ if($ogdescription=="")
 {
     $ogdescription=$description;
 }
+$content = @file_get_contents($url);
 $data = array('ogtitle' =>$ogtitle ,
                'ogdescription'=>$ogdescription,
                'ogimage'=>$ogimage,
                'ogvideo'=>$ogvideo,
                'host'=>$host["host"],
                'link'=>$link,
+               'image'=>$img,
+               'previewurl'=>$url,
+               'source'=>$content
                             );
 
 echo json_encode($data);
