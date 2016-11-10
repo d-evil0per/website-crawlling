@@ -12,6 +12,10 @@ Version 1.0, Crawls the meta tag details.
 <li>og:image</li>
 <li>og:video</li>
 <li>Host name</li>
+<li>a tag's links</li>
+<li>img tag's src</li>
+<li>preview if its allowed in iframe</li>
+<li>source code of url</li>
 </ol>
 </li>
 <li> this can be further modify to get more details like a href links, images, videos etc which can be used in various applications </li>
