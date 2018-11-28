@@ -19,10 +19,20 @@ function __construct() {
 
 				$url=$_POST['url'];
 				$urlcheck=explode('://',$url);
-				        if($urlcheck[0]!='http')
+				        
+				        if($urlcheck[0]!='https')
 				        {
-				            $url="http://".$_POST['url'];
+				        	if($urlcheck[0]=='http')
+				       		 {
+				            $url=$_POST['url'];
+				        	}
+				        	else
+				        	{
+				        		$url="https://".$_POST['url'];	
+				        	}
+				            
 				        }
+
 				    
 				    $ch = curl_init();
 

@@ -61,7 +61,7 @@
                             <div style="height: 400px;overflow: auto">
                                 <object data="#" id="preview" style="width:100%" height="400">
                               <p> <a href="" id="previewtxt">
-                                Fallback link for browsers that don't support iframes
+                                Click to Go
                               </a> </p>
                             </object>
                             </div>
